@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+   <head><title>Hello world</title></head>
+
+   <body>Get response from server .... Hello world .....
+
+      <button id="msg" onclick="sendMeassgeFromClient()" >send Message</button>
+
+      <script  src="socket.io/socket.io.js"></script>
+      <script>
+         var socket = io();
+
+         socket.on('connect',()=> {
+         console.log('printing in client side',socket.id);
+         });
+
+         // let getId= document.getElementById("msg").addEventListener("click",()=>{
+         //    socket.emit('message','Hey from client');
+         // })
+
+
+         function sendMeassgeFromClient(){
+            console.log("button click")
+            socket.emit('message','this is messsage from client');
+         }
+
+         socket.on('servermsg',(servermsg)=> {
+         console.log('printing the server msg',servermsg);
+         });
+
+         const listener = (eventName,...args) =>
+         {
+            console.log("=====",eventName,args);
+         }
+
+         socket.onAny(listener);
+
+      </script>
+   </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+   <head><title>Hello world</title></head>
+
+   <script>
+      // var socket = io();
+   </script>
+   <body>Hello world</body>
+</html> -->
